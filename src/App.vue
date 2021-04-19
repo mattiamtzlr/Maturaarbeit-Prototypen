@@ -7,6 +7,9 @@
     v-model="nameInput"
     @keyup.enter="saveName"
   >
+  <div>
+    {{hugeNumber}}
+  </div>
 </template>
 
 <script>
@@ -16,6 +19,10 @@ export default {
   name: 'App',
   components: {},
   setup() {
+    let hugeNumber = computed(function () {
+      return (2234972389427349623856293462834792n * 8104737263472634962734792834n).toString();
+    })
+
     let name = ref(localStorage.getItem("username"));
     // let loggedIn = true;
     let loggedIn = computed(function () {
@@ -34,6 +41,7 @@ export default {
       loggedIn,
       nameInput,
       saveName,
+      hugeNumber,
     }
   }
 }
