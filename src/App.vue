@@ -1,15 +1,39 @@
 <template>
-  <h1>Hello {{name}}</h1>
+  <h1 v-if="loggedIn">Hello {{name}}</h1>
+  <input 
+    type="text" 
+    v-else 
+    placeholder="What's your name?"
+    v-model="nameInput"
+    @keyup.enter="saveName"
+  >
 </template>
 
 <script>
+import {ref, computed} from "vue";
 
 export default {
   name: 'App',
   components: {},
   setup() {
+    let name = ref(localStorage.getItem("username"));
+    // let loggedIn = true;
+    let loggedIn = computed(function () {
+      return name.value != null;
+    })
+
+    let nameInput = ref("");
+    
+    function saveName() {
+      name.value = nameInput.value;
+      localStorage.setItem("username", name.value);
+    }
+
     return {
-      name: "Mattia",
+      name: name,
+      loggedIn,
+      nameInput,
+      saveName,
     }
   }
 }
@@ -26,5 +50,11 @@ export default {
 }
 h1 {
   font-size: 3em;
+}
+::placeholder {
+  font-family: monospace;
+}
+input {
+  font-family: monospace;
 }
 </style>
