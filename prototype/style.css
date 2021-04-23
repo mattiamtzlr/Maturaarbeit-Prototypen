@@ -6,11 +6,11 @@ html, body {
     scroll-behavior: smooth;
 }
 :root {
-    --light-color: #dcfff3;
+    --light-color: #dcfff7;
     --medium-color: #a0c9c0;
     --dark-color: #75978c;
 
-    --light-grey: #cccccc;
+    --light-grey: #dddddd;
 }
 ::-webkit-scrollbar {
     width: 15px;

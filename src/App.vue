@@ -7,9 +7,6 @@
     v-model="nameInput"
     @keyup.enter="saveName"
   >
-  <div>
-    {{hugeNumber}}
-  </div>
 </template>
 
 <script>
@@ -64,5 +61,7 @@ h1 {
 }
 input {
   font-family: monospace;
+  font-size: 2em;
+  padding: 10px;
 }
 </style>
