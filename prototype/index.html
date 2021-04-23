@@ -53,8 +53,24 @@
     </div>
     <script>
         var conversationSpace = document.querySelector("#conversation-space");
-        addEventListener("load", function () {
+        function scrollToBottom() {
             conversationSpace.scrollTop = conversationSpace.scrollHeight;
+        }
+        addEventListener("load", scrollToBottom());
+
+        var sendButton = document.querySelector("#send-button");
+        var newMessageInput = document.querySelector("#new-message-input");
+        sendButton.addEventListener("click", function () {
+            conversationSpace.innerHTML += '<div class="text-message right">' + newMessageInput.value + '</div>';
+            scrollToBottom();
+            newMessageInput.value = "";
+        })
+
+        newMessageInput.addEventListener("keyup", function (event) {
+            if (event.keyCode == "13") {
+                event.preventDefault()
+                sendButton.click(); 
+            }
         })
     </script>
 </body>
