@@ -1,0 +1,54 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DHM-Demonstration</title>
+    <style>
+        body {
+            font-family: monospace;
+        }
+        #output {
+            padding: 50px;
+            font-size: 2em;
+            width: 70%;
+            margin: auto;
+        }
+        blue {
+            color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="output">
+        
+    </div>
+    <script>
+        var g = 5n; // generator
+        var n = 58321; // primzahl, 16-Bit
+
+        var aPriv = Math.floor(Math.random() * n); // privater Schlüssel a; zufällige Zahl zwischen 1 und n
+        var bPriv = Math.floor(Math.random() * n); // privater Schlüssel b; zufällige Zahl zwischen 1 und n
+
+        aPriv = BigInt(aPriv);
+        bPriv = BigInt(bPriv);
+        n = BigInt(n);
+
+        var aPub = (g ** aPriv) % n; // öffentlicher Schlüssel A
+        var bPub = (g ** bPriv) % n; // öffentlicher Schlüssel B
+
+        var sAlice = (bPub ** aPriv) % n; // gemeinsamer geheimer Schlüssel, berechnet von Alice
+        var sBob = (aPub ** bPriv) % n; // gemeinsamer geheimer Schlüssel, berechnet von Bob
+
+        if (sAlice == sBob) {
+            var s = sAlice;
+        } else {
+            console.log("Error: gemeinsame geheime Schlüssel sind nicht identisch")
+        }
+        
+        var output = document.querySelector("#output");
+        output.innerHTML = "a = " + aPriv + "<br>A = " + aPub + "<br><br>b = " + bPriv + "<br>B = " + bPub + "<br><br><blue>gemeinsamer geheimer Schlüssel (S) = " + s + "</blue>";
+
+    </script>
+</body>
+</html>
