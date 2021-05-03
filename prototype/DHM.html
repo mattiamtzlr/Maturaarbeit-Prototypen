@@ -8,11 +8,41 @@
         body {
             font-family: monospace;
         }
+        button, input {
+            outline: none;
+            font-size: 1.2em;
+        }
+        #keyOutput {
+            font-size: 1.2em;
+            word-break: break-all;
+            padding: 20px;
+            border-bottom: 1px solid black;
+        }
+        #input, #output {
+            margin: 20px;
+        }
         #output {
-            padding: 50px;
-            font-size: 2em;
-            width: 70%;
-            margin: auto;
+            font-size: 1.2em;
+        }
+        input[type=text] {
+            font-family: monospace;
+            padding: 5px;
+            width: 50%;
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+        ::placeholder {
+            font-family: monospace;
+        }
+        button {
+            font-family: monospace;
+            padding: 5px;
+            background-color: #acffc5;
+            border: 1px solid black;
+            border-radius: 3px;
+        }
+        button:active {
+            background-color: #70db90;
         }
         blue {
             color: blue;
@@ -20,27 +50,30 @@
     </style>
 </head>
 <body>
-    <div id="output">
-        
+    <div id="keyOutput"></div>
+    <div id="input">
+        <input type="text" id="messageInput" placeholder="Nachricht (ASCII)" value="">
+        <button id="encryptButton">ENCRYPT</button>
     </div>
+    <div id="output"></div>
     <script>
-        function squareMultiply(x, k) {
-            var y = x; // Zwischenergebnis
+        function squareMultiply(x, k, mod) {
+            var y = x % mod; // Zwischenergebnis
             var kBinary = k.toString(2); // Exponent in Binär
             kBinary = kBinary.replace(kBinary[0], ""); // Erstes "1" entfernen, dafür mit x starten da 1^2 * x = x
             
             for (const i of kBinary) {
-                y = y * y;
+                y = (y * y) % mod;
                 if (i == 1) {
-                    y = y * x;
+                    y = (y * x) % mod;
                 }
             }
             return y;
         }
 
-        console.time("time_to_generate_keys");
         var g = 5n; // generator
-        var n = 365479; // primzahl, 20-Bit
+        // primzahl, 1024-Bit https://asecuritysite.com/encryption/random3
+        var n = 144968844729587143087947916374987453420700956102139770573498804625701451049647360390010974746689567059966166271264440907327606457910912009926504835361410967696638595165947199324722791406276736002445389940170027055986485290395258436618263633469540075526127618591403751758571617582156187178329248215703225502001;
 
         var aPriv = Math.floor(Math.random() * n); // privater Schlüssel a; zufällige Zahl zwischen 1 und n
         var bPriv = Math.floor(Math.random() * n); // privater Schlüssel b; zufällige Zahl zwischen 1 und n
@@ -49,23 +82,37 @@
         bPriv = BigInt(bPriv);
         n = BigInt(n);
 
-        var aPub = (squareMultiply(g, aPriv)) % n; // öffentlicher Schlüssel A
-        var bPub = (squareMultiply(g, bPriv)) % n; // öffentlicher Schlüssel B
+        var aPub = squareMultiply(g, aPriv, n); // öffentlicher Schlüssel A
+        var bPub = squareMultiply(g, bPriv, n); // öffentlicher Schlüssel B
 
-        var sAlice = (squareMultiply(bPub, aPriv)) % n; // gemeinsamer geheimer Schlüssel, berechnet von Alice
-        var sBob = (squareMultiply(aPub, bPriv)) % n; // gemeinsamer geheimer Schlüssel, berechnet von Bob
+        var sAlice = squareMultiply(bPub, aPriv, n); // gemeinsamer geheimer Schlüssel, berechnet von Alice
+        var sBob = squareMultiply(aPub, bPriv, n); // gemeinsamer geheimer Schlüssel, berechnet von Bob
 
         if (sAlice == sBob) {
             var s = sAlice;
-            console.timeEnd("time_to_generate_keys");
         } else {
             console.error("Error: gemeinsame geheime Schlüssel sind nicht identisch")
         }
         
-        var output = document.querySelector("#output");
-        output.innerHTML = "a = " + aPriv + "<br>A = " + aPub + "<br><br>b = " + bPriv + "<br>B = " + bPub + "<br><br><blue>gemeinsamer geheimer Schlüssel (S) = " + s + "</blue>"; 
+        var keyOutput = document.getElementById("keyOutput");
+        keyOutput.innerHTML = "a = " + aPriv + "<br>A = " + aPub + "<br><br>b = " + bPriv + "<br>B = " + bPub + "<br><br><blue>gemeinsamer geheimer Schlüssel (S) = " + s + "</blue>"; 
 
         // Encryption Algorithm: AES, ChaCha
+
+        var messageInput = document.getElementById("messageInput");
+        var output = document.getElementById("output");
+        var encryptButton = document.getElementById("encryptButton");
+
+        encryptButton.addEventListener("click", function () {
+            output.innerHTML = "Verschlüsselung ist noch nicht implementiert :)";
+        })
+
+        messageInput.addEventListener("keyup", function(event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                encryptButton.click();
+            }
+        })
 
     </script>
 </body>
