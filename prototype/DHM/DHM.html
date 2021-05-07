@@ -70,8 +70,9 @@
         }
         
         var nonceArray = crypto.getRandomValues(new Uint8Array(12)); // zufällige Nonce (= number used once) generieren
-        var chacha20 = new JSChaCha20(keyArray, nonceArray, 32); // chacha20 instance erstellen
-        
+        const encryptor = new JSChaCha20(keyArray, nonceArray); // chacha20 instance erstellen
+        const decryptor = new JSChaCha20(keyArray, nonceArray);
+
         // Elemente
         var messageInput = document.getElementById("messageInput");
         var output = document.getElementById("output");
@@ -89,14 +90,14 @@
         
         var messageEncrypted;
         encryptButton.addEventListener("click", function () {
-            messageEncrypted = chacha20.encrypt(enc.encode(messageInput.value)); // encoden und verschlüsseln
+            messageEncrypted = encryptor.encrypt(enc.encode(messageInput.value)); // encoden und verschlüsseln
             output.innerHTML = `Verschlüsselte Nachricht: ${messageEncrypted}`; // output
             decryptButton.style.display = "inline"; // DECRYPT-Button aktivieren
         })
 
         
         decryptButton.addEventListener("click", function () {
-            var messageDecrypted = chacha20.decrypt(messageEncrypted); // entschlüsseln
+            var messageDecrypted = decryptor.decrypt(messageEncrypted); // entschlüsseln
             output.innerHTML += `<br><br>Entschlüsselte Nachricht: ${dec.decode(messageDecrypted)}`; // decoden
         })
 
