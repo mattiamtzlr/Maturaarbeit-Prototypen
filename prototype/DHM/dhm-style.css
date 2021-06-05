@@ -1,5 +1,6 @@
 body {
     font-family: monospace;
+    padding: 20px 40px 0 40px;
 }
 button, input {
     outline: none;
@@ -8,11 +9,12 @@ button, input {
 #keyOutput {
     font-size: 1.2em;
     word-break: break-all;
-    padding: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px solid black;
 }
 #input, #output {
-    margin: 20px;
+    margin-top: 20px;
+    word-break: break-all;
 }
 #output {
     font-size: 1.2em;
@@ -32,6 +34,7 @@ button {
     padding: 5px;
     border: 1px solid black;
     border-radius: 3px;
+    cursor: pointer;
 }
 #encryptButton {
     background-color: #acffc5;
@@ -50,6 +53,12 @@ button:disabled {
     background-color: #ececec !important;
     color: #a0a0a0;
     border-color: #919191;
+}
+red {
+    color: red;
+}
+green {
+    color: #00a300;
 }
 blue {
     color: blue;
