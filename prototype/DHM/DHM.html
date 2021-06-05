@@ -3,14 +3,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DHM-Demonstration</title>
+    <title>DHM Demonstration</title>
     <script src="jschacha20.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="dhm-style.css">
 </head>
 <body>
     <div id="keyOutput"></div>
     <div id="input">
-        <input type="text" id="messageInput" placeholder="Nachricht (ASCII)" value="" oninput="disableButton()">
+        <input type="text" id="messageInput" placeholder="Nachricht" oninput="disableButton()">
         <button id="encryptButton" disabled>ENCRYPT</button>
         <button id="decryptButton">DECRYPT</button>
     </div>
@@ -79,6 +80,14 @@
         var encryptButton = document.getElementById("encryptButton");
         var decryptButton = document.getElementById("decryptButton");
         
+        // ENCRYPT-Button bei Enter-Taste im input feld klicken
+        messageInput.addEventListener("keyup", function (event) {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                encryptButton.click();
+            }
+        })
+
         // Funktion um ENCRYPT-Button zu deaktivieren
         function disableButton() {
             if (messageInput.value == "") {
@@ -91,14 +100,14 @@
         var messageEncrypted;
         encryptButton.addEventListener("click", function () {
             messageEncrypted = encryptor.encrypt(enc.encode(messageInput.value)); // encoden und verschlüsseln
-            output.innerHTML = `Verschlüsselte Nachricht: ${messageEncrypted}`; // output
+            output.innerHTML = `Verschlüsselte Nachricht: <red>${messageEncrypted}</red> // <blue>${dec.decode(messageEncrypted)}</blue>`; // output
             decryptButton.style.display = "inline"; // DECRYPT-Button aktivieren
         })
 
         
         decryptButton.addEventListener("click", function () {
             var messageDecrypted = decryptor.decrypt(messageEncrypted); // entschlüsseln
-            output.innerHTML += `<br><br>Entschlüsselte Nachricht: ${dec.decode(messageDecrypted)}`; // decoden
+            output.innerHTML += `<br><br>Entschlüsselte Nachricht: <green>${dec.decode(messageDecrypted)}</green>`; // decoden
         })
 
     </script>
