@@ -1,0 +1,65 @@
+body {
+    font-family: monospace;
+    padding: 20px 40px 0 40px;
+}
+button, input {
+    outline: none;
+    font-size: 1.2em;
+}
+#keyOutput {
+    font-size: 1.2em;
+    word-break: break-all;
+    padding-bottom: 20px;
+    border-bottom: 1px solid black;
+}
+#input, #output {
+    margin-top: 20px;
+    word-break: break-all;
+}
+#output {
+    font-size: 1.2em;
+}
+input[type=text] {
+    font-family: monospace;
+    padding: 5px;
+    width: 50%;
+    border: 1px solid black;
+    border-radius: 3px;
+}
+::placeholder {
+    font-family: monospace;
+}
+button {
+    font-family: monospace;
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 3px;
+    cursor: pointer;
+}
+#encryptButton {
+    background-color: #acffc5;
+}
+#encryptButton:active {
+    background-color: #70db90;
+}
+#decryptButton {
+    display: none;
+    background-color: #64a7ff;
+}
+#decryptButton:active {
+    background-color: #468be4;
+}
+button:disabled {
+    background-color: #ececec !important;
+    color: #a0a0a0;
+    border-color: #919191;
+}
+red {
+    color: red;
+}
+green {
+    color: #00a300;
+}
+blue {
+    color: blue;
+}
