@@ -4,4 +4,5 @@ Prototypen, Entwürfe und Proof of Concepts der Maturaarbeit von Mattia Metzler 
 - Symmetrische Verschlüsselung mit Fernet (Ordner _Fernet_)
 - User Interface (Ordner _UI_)
 
-Diese Software wurde unter der GNU GENERAL PUBLIC LICENSE veröffentlicht. Copyright &copy; 2021 Mattia Metzler.
+Diese Software wurde unter der GNU GENERAL PUBLIC LICENSE veröffentlicht. Copyright &copy; 2021 Mattia Metzler.  
+Für weitere Informationen siehe `LICENSE`.
